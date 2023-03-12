@@ -1,0 +1,87 @@
+{
+  "version": "1.0",
+  "resource": "/myTestAPI",
+  "path": "/default/myTestAPI",
+  "httpMethod": "POST",
+  "headers": {
+    "Content-Length": "502",
+    "Content-Type": "application/json",
+    "Host": "uu7ntmf140.execute-api.us-east-1.amazonaws.com",
+    "User-Agent": "Discord-Interactions/1.0 (+https://discord.com)",
+    "X-Amzn-Trace-Id": "Root=1-63fd9833-159be5ac1989bc435140e546",
+    "X-Forwarded-For": "35.237.4.214",
+    "X-Forwarded-Port": "443",
+    "X-Forwarded-Proto": "https",
+    "x-signature-ed25519": "d56be838927a65f52ab3b655ef4089f354a5cf26bb3c91fed6022bdbdd599893614c4a6646b7d2037d4ffb1438c3cdabb111255cdbc044e0237b74f40f10ff07",
+    "x-signature-timestamp": "1677563955"
+  },
+  "multiValueHeaders": {
+    "Content-Length": [
+      "502"
+    ],
+    "Content-Type": [
+      "application/json"
+    ],
+    "Host": [
+      "uu7ntmf140.execute-api.us-east-1.amazonaws.com"
+    ],
+    "User-Agent": [
+      "Discord-Interactions/1.0 (+https://discord.com)"
+    ],
+    "X-Amzn-Trace-Id": [
+      "Root=1-63fd9833-159be5ac1989bc435140e546"
+    ],
+    "X-Forwarded-For": [
+      "35.237.4.214"
+    ],
+    "X-Forwarded-Port": [
+      "443"
+    ],
+    "X-Forwarded-Proto": [
+      "https"
+    ],
+    "x-signature-ed25519": [
+      "d56be838927a65f52ab3b655ef4089f354a5cf26bb3c91fed6022bdbdd599893614c4a6646b7d2037d4ffb1438c3cdabb111255cdbc044e0237b74f40f10ff07"
+    ],
+    "x-signature-timestamp": [
+      "1677563955"
+    ]
+  },
+  "queryStringParameters": null,
+  "multiValueQueryStringParameters": null,
+  "requestContext": {
+    "accountId": "801301537131",
+    "apiId": "uu7ntmf140",
+    "domainName": "uu7ntmf140.execute-api.us-east-1.amazonaws.com",
+    "domainPrefix": "uu7ntmf140",
+    "extendedRequestId": "BCS4Eg_OIAMEYww=",
+    "httpMethod": "POST",
+    "identity": {
+      "accessKey": null,
+      "accountId": null,
+      "caller": null,
+      "cognitoAmr": null,
+      "cognitoAuthenticationProvider": null,
+      "cognitoAuthenticationType": null,
+      "cognitoIdentityId": null,
+      "cognitoIdentityPoolId": null,
+      "principalOrgId": null,
+      "sourceIp": "35.237.4.214",
+      "user": null,
+      "userAgent": "Discord-Interactions/1.0 (+https://discord.com)",
+      "userArn": null
+    },
+    "path": "/default/myTestAPI",
+    "protocol": "HTTP/1.1",
+    "requestId": "BCS4Eg_OIAMEYww=",
+    "requestTime": "28/Feb/2023:05:59:15 +0000",
+    "requestTimeEpoch": 1677563955320,
+    "resourceId": "ANY /myTestAPI",
+    "resourcePath": "/myTestAPI",
+    "stage": "default"
+  },
+  "pathParameters": null,
+  "stageVariables": null,
+  "body": "{\"application_id\":\"1068453516219265024\",\"id\":\"1080006235430060075\",\"token\":\"aW50ZXJhY3Rpb246MTA4MDAwNjIzNTQzMDA2MDA3NToxQjZhT3IxSWV4dHlIVHN3TDByb0dOT2ljQTBjb0ZxSVd0Q0s3MFo4ODNsNER4SGJOUWxsbzc1bXBGdVRCSzVpdUZSTG5VT3hxbHhQZmxqZmg2ek9reFlZbjdJZDZEbXVqQnBmODBDMWlscENkMzZTckNDYkZvQVFxcENRZERNag\",\"type\":1,\"user\":{\"avatar\":\"e0aff22ee4fdce7689a5af205a5f149b\",\"avatar_decoration\":null,\"discriminator\":\"1094\",\"display_name\":null,\"id\":\"356569805572276235\",\"public_flags\":0,\"username\":\"tyler303047\"},\"version\":1}",
+  "isBase64Encoded": false
+}
