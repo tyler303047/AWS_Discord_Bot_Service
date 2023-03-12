@@ -13,5 +13,7 @@ The main specifications of this project to be implemented is as follows:
   
   
 
-![alt text](https://github.com/tyler303047/AWS_Discord_Bot_Service/blob/main/asset_files/Discord_Bot_Diagram.drawio.png?raw=true)
+![alt text](https://github.com/tyler303047/AWS_Discord_Bot_Service/blob/main/asset_files/Discord_Bot_Diagram.jpg?raw=true)
 <center> <h3>The shows the full architecture of the service at the time of writing</h3> </center>
+
+The idea behind this architecture is that the user will send a slash command through discord, which will go to an orchestration lambda. This orchestration lambda will decide which slash command it needs to execute, then send that to the corresponding lambda through an event context subscription in SNS. The add command handler will take in a link to raidbots.com, get the json file from that link, process it, and then upload the data from the processing to DynamoDB. The search user command handler will take in the `user_id` of the user in question and return all rows that match from DynamoDB. The search item command handler will take in the `item` field and return all matches from DynamoDB.
