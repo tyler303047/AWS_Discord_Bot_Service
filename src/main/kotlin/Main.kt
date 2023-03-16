@@ -4,6 +4,7 @@ import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
 import main.model.request.Request
 import main.model.response.Response
+import org.json.JSONObject
 import software.pando.crypto.nacl.Crypto
 
 class MainHandler: RequestHandler<Request, Response> {
@@ -21,11 +22,11 @@ class MainHandler: RequestHandler<Request, Response> {
 
         if (!isVerified) {
             println("Sent Invalid Request Response")
-            return Response(401, null, "invalid request signature")
+            return Response(401, null, JSONObject(mapOf("error" to "invalid request signature")).toString())
         }
 
         println("Sent OK Response")
-        return Response(200, null, "OK")
+        return Response(200, mapOf("Content-Type" to "application/json"), JSONObject(mapOf("type" to 1)).toString())
     }
 }
 
