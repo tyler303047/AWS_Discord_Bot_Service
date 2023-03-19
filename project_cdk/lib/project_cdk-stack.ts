@@ -11,7 +11,12 @@ export class ProjectCdkStack extends cdk.Stack {
       pipelineName: 'MyPipeline',
       synth: new ShellStep('Synth', {
         input: CodePipelineSource.gitHub('tyler303047/AWS_Discord_Bot_Service', 'main'),
-        commands: ['npm ci', 'npm run build', 'npx cdk synth']
+        commands: [
+            'cd project_cdk',
+            'npm ci',
+            'npm run build',
+            'npx cdk synth'
+        ]
       })
     });
   }
