@@ -1,11 +1,8 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
-import {GitHubSourceAction} from "aws-cdk-lib/aws-codepipeline-actions";
-import {SecretValue} from "aws-cdk-lib";
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
 
-export class ProjectCdkStack extends cdk.Stack {
+export class ProjectCdkPipeline extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
