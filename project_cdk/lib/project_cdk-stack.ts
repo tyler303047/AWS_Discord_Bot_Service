@@ -12,8 +12,8 @@ export class ProjectCdkStack extends cdk.Stack {
     const pipeline = new CodePipeline(this, 'Pipeline', {
       pipelineName: 'MyPipeline',
       synth: new ShellStep('Synth', {
-          input: CodePipelineSource.gitHub('tyler303047/AWS_Discord_Bot_Service', 'main', {
-              authentication: SecretValue.plainText("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")
+          input: CodePipelineSource.connection('tyler303047/AWS_Discord_Bot_Service', 'main', {
+              connectionArn: 'arn:aws:codestar-connections:us-east-1:801301537131:connection/55337186-87da-460c-8251-d2f386c4b6c3',
           }),
           installCommands: [
               'npm install -g aws-cdk'
