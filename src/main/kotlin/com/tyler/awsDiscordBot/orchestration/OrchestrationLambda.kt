@@ -1,4 +1,4 @@
-package main
+package main.com.tyler.awsDiscordBot
 
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
@@ -7,7 +7,7 @@ import main.model.response.Response
 import org.json.JSONObject
 import software.pando.crypto.nacl.Crypto
 
-class MainHandler: RequestHandler<Request, Response> {
+class OrchestrationLambdaHandler: RequestHandler<Request, Response> {
 
     private val publicKeyString = System.getenv("PUBLIC_KEY")
 

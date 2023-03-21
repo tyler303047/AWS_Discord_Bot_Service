@@ -1,10 +1,8 @@
 import com.amazonaws.services.lambda.runtime.Context
-import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
-import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import main.MainHandler
+import main.com.tyler.awsDiscordBot.OrchestrationLambdaHandler
 import main.model.request.Request
 import spock.lang.Specification
 
@@ -19,7 +17,7 @@ class MainTest extends Specification {
         def contents = file.readBytes()
         def event = objectMapper.readValue(contents, new TypeReference<Request>() {})
         def context = Mock(Context)
-        def output = new MainHandler().handleRequest(event, context)
+        def output = new OrchestrationLambdaHandler().handleRequest(event, context)
 
         then:
         output.statusCode == statusCode
