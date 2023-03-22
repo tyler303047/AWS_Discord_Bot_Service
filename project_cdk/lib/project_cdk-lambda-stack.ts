@@ -9,11 +9,6 @@ export class MyLambdaStack extends cdk.Stack {
     constructor(scope: Construct, id: string, stageName: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
-        // const buildVolume: DockerVolume = {
-        //     containerPath: '/root/.m2/',
-        //     hostPath: os.homedir() + '/.m2/',
-        // }
-
         new Function(this, 'OrchestrationLambda', {
             runtime: Runtime.JAVA_11,
             handler: 'main.handler',
@@ -26,10 +21,7 @@ export class MyLambdaStack extends cdk.Stack {
                         'cd com/tyler/awsDiscordBot/orchestration ',
                         '&& mvn clean install ',
                         '&& cp /asset-input/com/tyler/awsDiscordBot/orchestration/target/orchestration.jar /asset-output/'
-                    ],
-                    // volumes: [
-                    //     buildVolume,
-                    // ]
+                    ]
                 }
             }),
         })
