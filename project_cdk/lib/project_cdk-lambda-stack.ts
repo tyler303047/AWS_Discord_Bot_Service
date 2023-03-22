@@ -19,7 +19,7 @@ export class MyLambdaStack extends cdk.Stack {
                         '/bin/sh',
                         '-c',
                         'cd com/tyler/awsDiscordBot/orchestration ',
-                        '&& mvn clean install ',
+                        '&& mvn install ',
                         '&& cp /asset-input/com/tyler/awsDiscordBot/orchestration/target/orchestration.jar /asset-output/'
                     ],
                     environment: {
