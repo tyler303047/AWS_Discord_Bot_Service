@@ -21,7 +21,10 @@ export class MyLambdaStack extends cdk.Stack {
                         'cd com/tyler/awsDiscordBot/orchestration ',
                         '&& mvn clean install ',
                         '&& cp /asset-input/com/tyler/awsDiscordBot/orchestration/target/orchestration.jar /asset-output/'
-                    ]
+                    ],
+                    environment: {
+                        "privileged": "true"
+                    }
                 }
             }),
         })
