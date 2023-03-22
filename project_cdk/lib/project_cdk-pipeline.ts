@@ -20,7 +20,8 @@ export class ProjectCdkPipeline extends cdk.Stack {
             'npm ci',
             'npm run build',
             'npx cdk synth'
-          ]
+          ],
+          primaryOutputDirectory: 'project_cdk/'
       })
     });
   }
