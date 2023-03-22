@@ -23,7 +23,12 @@ export class ProjectCdkPipeline extends cdk.Stack {
             'npx cdk synth',
           ],
           primaryOutputDirectory: 'project_cdk/cdk.out',
-      })
+      }),
+        codeBuildDefaults: {
+          buildEnvironment: {
+              privileged: true,
+          },
+        },
     });
 
     const testingStage = pipeline.addStage(new MyPipelineAppStage(this, "test", {
