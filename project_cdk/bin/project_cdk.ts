@@ -2,7 +2,9 @@
 import * as cdk from 'aws-cdk-lib';
 import { ProjectCdkPipeline } from '../lib/project_cdk-pipeline';
 
-const app = new cdk.App();
+const app = new cdk.App({
+    outdir: './cdk.out'
+});
 new ProjectCdkPipeline(app, 'ProjectCdkPipeline', {
   env: {
       account: '801301537131',
