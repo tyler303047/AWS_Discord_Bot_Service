@@ -16,7 +16,7 @@ export class MyLambdaStack extends cdk.Stack {
 
         const orchestrationHandler = new Function(this, 'OrchestrationLambda', {
             runtime: Runtime.JAVA_11,
-            handler: 'OrchestrationHandler.OrchestrationLambdaHandler::handleRequest',
+            handler: 'OrchestrationLambda.OrchestrationLambdaHandler::handleRequest',
             code: Code.fromAsset(path.join(__dirname, '/../../src/main/kotlin'), {
                 bundling: {
                     image: aws_lambda.Runtime.JAVA_11.bundlingImage,
