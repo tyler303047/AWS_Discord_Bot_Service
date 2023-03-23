@@ -13,7 +13,6 @@ class MainTest extends Specification {
     def "Main handler happy path"() {
 
         when: "The basic call happy path is enacted"
-        null == 0
         def file = new File(filePath)
         def contents = file.readBytes()
         def event = objectMapper.readValue(contents, new TypeReference<Request>() {})

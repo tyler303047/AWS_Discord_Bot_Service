@@ -34,7 +34,7 @@ export class MyLambdaStack extends cdk.Stack {
 
         const orchestrationHandler = new Function(this, 'OrchestrationLambda', {
             runtime: Runtime.JAVA_11,
-            handler: 'com.tyler.awsDiscordBot.OrchestrationLambdaHandler::handleRequest',
+            handler: 'main.com.tyler.awsDiscordBot.OrchestrationLambdaHandler::handleRequest',
             code: projectCode,
         });
 
