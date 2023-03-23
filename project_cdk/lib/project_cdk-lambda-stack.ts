@@ -14,19 +14,14 @@ export class MyLambdaStack extends cdk.Stack {
             hostPath: os.homedir() + '/.m2/',
         }
 
-        const orchestrationHandler = new Function(this, 'OrchestrationLambda', {
-            runtime: Runtime.JAVA_11,
-            handler: 'OrchestrationLambdaHandler::handleRequest',
-            code: Code.fromAsset(path.join(__dirname, '/../../src/main/kotlin'), {
+        const projectCode = Code.fromAsset(path.join(__dirname, '/../..'), {
                 bundling: {
                     image: aws_lambda.Runtime.JAVA_11.bundlingImage,
                     command: [
                         '/bin/sh',
                         '-c',
-                        'cd com/tyler/awsDiscordBot/orchestration/ ' +
-                        '&& mvn clean install ' +
-                        '&& cd ../../../../ ' +
-                        '&& cp /asset-input/com/tyler/awsDiscordBot/orchestration/target/orchestration-lambda-1.0.jar /asset-output/'
+                        'mvn clean install ' +
+                        '&& cp /asset-input/target/AWS_Lamba_API_Gateway_Tutorial-shaded-1.0-SNAPSHOT.jar /asset-output/'
                     ],
                     environment: {
                         "privileged": "true"
@@ -35,7 +30,12 @@ export class MyLambdaStack extends cdk.Stack {
                         buildVolume,
                     ]
                 }
-            }),
+            });
+
+        const orchestrationHandler = new Function(this, 'OrchestrationLambda', {
+            runtime: Runtime.JAVA_11,
+            handler: 'OrchestrationLambdaHandler::handleRequest',
+            code: projectCode,
         });
 
         const apiEntrance = new aws_apigateway.RestApi(this, "awsDiscordBotEntrance", {
