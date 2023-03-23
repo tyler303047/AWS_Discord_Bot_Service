@@ -18,7 +18,7 @@
           </execution>
         </executions>
         <configuration>
-          <finalName>AWS_Lamba_API_Gateway_Tutorial-shaded-${project.version}</finalName>
+          <finalName>AWS_Lambda_API_Gateway_Tutorial-shaded-${project.version}</finalName>
           <filters>
             <filter>
               <artifact>*:*</artifact>

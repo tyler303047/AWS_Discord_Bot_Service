@@ -1,3 +1,4 @@
 .idea/*
 out/*
+target/*
 AWS_Lambda_API_Gateway_Tutorial.iml
