@@ -24,7 +24,7 @@ class MainTest extends Specification {
 
         where:
         filePath                                        | statusCode
-        "./test/resources/DiscordDefaultRequest.json"   | 200
-        "./test/resources/SecondDiscordRequest.json"    | 401
+        "./src/test/resources/DiscordDefaultRequest.json"   | 200
+        "./src/test/resources/SecondDiscordRequest.json"    | 401
     }
 }
