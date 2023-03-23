@@ -21,7 +21,7 @@ export class MyLambdaStack extends cdk.Stack {
                         '/bin/sh',
                         '-c',
                         'mvn clean install ' +
-                        '&& cp /asset-input/target/AWS_Lamba_API_Gateway_Tutorial-shaded-1.0-SNAPSHOT.jar /asset-output/'
+                        '&& cp /asset-input/target/AWS_Lambda_API_Gateway_Tutorial-shaded-1.0-SNAPSHOT.jar /asset-output/'
                     ],
                     environment: {
                         "privileged": "true"
