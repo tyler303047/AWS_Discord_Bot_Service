@@ -2,16 +2,20 @@ package main.com.tyler.awsDiscordBot
 
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 import main.model.request.Request
 import main.model.response.Response
 import org.json.JSONObject
 import software.pando.crypto.nacl.Crypto
+import java.io.File
 
 class OrchestrationLambdaHandler: RequestHandler<Request, Response> {
 
     private val publicKeyString = System.getenv("PUBLIC_KEY")
 
-    override fun handleRequest(event: Request, context: Context): Response {
+    override fun handleRequest(event: Request, context: Context?): Response {
         println("Handling requestsdfsfsdfsdfsdfsdf: $event")
 
         println("publicKeyString: ${publicKeyString}")

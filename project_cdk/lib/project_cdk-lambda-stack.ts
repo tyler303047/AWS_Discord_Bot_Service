@@ -20,7 +20,7 @@ export class MyLambdaStack extends cdk.Stack {
                     command: [
                         '/bin/sh',
                         '-c',
-                        'mvn clean install ' +
+                        'mvn clean package ' +
                         '&& cp /asset-input/target/AWS_Lambda_API_Gateway_Tutorial-shaded-1.0-SNAPSHOT.jar /asset-output/'
                     ],
                     environment: {
@@ -34,7 +34,7 @@ export class MyLambdaStack extends cdk.Stack {
 
         const orchestrationHandler = new Function(this, 'OrchestrationLambda', {
             runtime: Runtime.JAVA_11,
-            handler: 'OrchestrationLambdaHandler::handleRequest',
+            handler: 'com.tyler.awsDiscordBot.OrchestrationLambdaHandler::handleRequest',
             code: projectCode,
         });
 
