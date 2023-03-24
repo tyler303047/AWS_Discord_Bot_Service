@@ -4,9 +4,10 @@ import { Construct } from "constructs";
 import { Function, InlineCode, Runtime, Code } from "aws-cdk-lib/aws-lambda";
 import * as path from 'path';
 import {aws_apigateway, aws_lambda, DockerVolume} from "aws-cdk-lib";
+import {MyStackProps} from "./utils/MyStackProps";
 
 export class MyLambdaStack extends cdk.Stack {
-    constructor(scope: Construct, id: string, stageName: string, props?: cdk.StackProps) {
+    constructor(scope: Construct, id: string, stageName: string, props?: MyStackProps) {
         super(scope, id, props);
 
         const buildVolume: DockerVolume = {
@@ -36,6 +37,10 @@ export class MyLambdaStack extends cdk.Stack {
             runtime: Runtime.JAVA_11,
             handler: 'main.com.tyler.awsDiscordBot.OrchestrationLambdaHandler::handleRequest',
             code: projectCode,
+            environment: {
+                "PUBLIC_KEY": props!.environmentVariables!.public_key
+            },
+            timeout: cdk.Duration.seconds(10),
         });
 
         const apiEntrance = new aws_apigateway.RestApi(this, "awsDiscordBotEntrance", {

@@ -32,13 +32,19 @@ export class ProjectCdkPipeline extends cdk.Stack {
     });
 
     const testingStage = pipeline.addStage(new MyPipelineAppStage(this, "test", {
-        env: { account: "801301537131", region: "us-east-2" }
+        env: { account: "801301537131", region: "us-east-2" },
+        environmentVariables: {
+            public_key: "96376e878b51e7436d1a918900d30b67db05d4157828550fcb65a1cbfd40ecee"
+        }
     }));
 
     // testingStage.addPost(new ManualApprovalStep('Manual approval step before deployment to production'));
 
     const prodStage = pipeline.addStage(new MyPipelineAppStage(this, "prod", {
-        env: { account: "801301537131", region: "us-east-1" }
+        env: { account: "801301537131", region: "us-east-1" },
+        environmentVariables: {
+            public_key: "96376e878b51e7436d1a918900d30b67db05d4157828550fcb65a1cbfd40ecee"
+        }
     }))
 
     prodStage.addPre(new ManualApprovalStep('Manual approval step before deployment to production'));
