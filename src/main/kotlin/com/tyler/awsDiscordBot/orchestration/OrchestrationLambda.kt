@@ -16,7 +16,7 @@ class OrchestrationLambdaHandler: RequestHandler<Request, Response> {
     private val publicKeyString = System.getenv("PUBLIC_KEY")
 
     override fun handleRequest(event: Request, context: Context?): Response {
-        println("Handling requestsdfsfsdfsdfsdfsdf: $event")
+        println("Handling request: $event")
 
         println("publicKeyString: ${publicKeyString}")
 
