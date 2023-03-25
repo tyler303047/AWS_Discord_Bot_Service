@@ -12,7 +12,7 @@ data class Request(
     var requestContext: RequestContext = RequestContext(),
     var pathParameters: String? = "",
     var stageVariables: String? = "",
-    var body: String? = "",
+    var body: Map<String, String> = mapOf<String, String>(),
     var isBase64Encoded: Boolean? = false,
 )
 

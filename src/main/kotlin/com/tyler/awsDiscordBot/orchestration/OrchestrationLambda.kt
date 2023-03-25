@@ -28,12 +28,28 @@ class OrchestrationLambdaHandler: RequestHandler<Request, Response> {
 
         if (!isVerified) {
             println("Sent Invalid Request Response")
-            return Response(401, null, JSONObject(mapOf("error" to "invalid request signature")).toString())
+            return ErrorObject(401, "invalid request signature")
         }
 
-        println("Sent OK Response")
-        return Response(200, mapOf("Content-Type" to "application/json"), JSONObject(mapOf("type" to 1)).toString())
+        if (event.body["type"] == "1") {
+            println("Sent OK Response")
+            return Response(200, mapOf("Content-Type" to "application/json"), JSONObject(mapOf("type" to 1)).toString())
+        } else if (event.body["type"] == "2") {
+            return Response(200, mapOf("Content-Type" to "application/json"), JSONObject(mapOf(
+                "type" to 4,
+                "data" to JSONObject(mapOf(
+                    "content" to "PONG!",
+                )).toString()
+            )).toString())
+        } else {
+            println("unsupported interaction found")
+            return ErrorObject(400, "unsupported interaction type")
+        }
     }
+}
+
+fun ErrorObject(statusCode: Int, ErrorMessage: String): Response {
+    return Response(statusCode, null, JSONObject(mapOf("error" to ErrorMessage)).toString())
 }
 
 fun String.decodeHex(): ByteArray {
