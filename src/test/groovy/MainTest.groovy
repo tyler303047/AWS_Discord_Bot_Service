@@ -20,6 +20,7 @@ class MainTest extends Specification {
         def output = new OrchestrationLambdaHandler().handleRequest(event, context)
 
         then:
+        noExceptionThrown()
         output.statusCode == statusCode
 
         where:

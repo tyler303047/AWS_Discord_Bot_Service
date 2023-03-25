@@ -1,5 +1,7 @@
 package main.model.request
 
+import java.sql.Timestamp
+
 data class Request(
     var version: Double = 1.0,
     var resource: String = "",
@@ -12,7 +14,7 @@ data class Request(
     var requestContext: RequestContext = RequestContext(),
     var pathParameters: String? = "",
     var stageVariables: String? = "",
-    var body: Map<String, String> = mapOf<String, String>(),
+    var body: String? = "",
     var isBase64Encoded: Boolean? = false,
 )
 
@@ -53,3 +55,96 @@ data class RequestIdentity(
 enum class HttpMethod {
     POST,
 }
+
+data class DiscordBodyObject(
+    val id: String,
+    val application_id: String,
+    val type: String,
+    val data: DiscordDataObject?,
+    val guild_id: String?,
+    val channel_id: String?,
+    val member: GuildMemberObject?,
+    val user: UserObject?,
+    val token: String,
+    val version: Int,
+    val message: MessageObject?,
+    val app_permissions: String?,
+    val locale: String?,
+    val guild_locale: String?,
+)
+
+data class DiscordDataObject(
+    val id: String,
+    val name: String,
+    val type: Int,
+    val resolved: String?,
+    val options: Array<String>?,
+    val guild_id: String?,
+    val target_id: String?,
+)
+
+data class GuildMemberObject(
+    val user: UserObject?,
+    val nick: String?,
+    val avatar: String?,
+    val roles: Array<String>?,
+    val joined_at: String?,
+    val premium_since: String?,
+    val deaf: Boolean?,
+    val mute: Boolean?,
+    val flags: Int?,
+    val pending: Boolean?,
+    val permissions: String?,
+    val communication_disabled_until: String?,
+)
+
+data class UserObject(
+    val id: String,
+    val username: String,
+    val display_name: String?,
+    val discriminator: String?,
+    val avatar: String?,
+    val avatar_decoration: String?,
+    val bot: Boolean?,
+    val system: Boolean?,
+    val mfa_enabled: Boolean?,
+    val banner: String?,
+    val accent_color: Int?,
+    val locale: String?,
+    val verified: Boolean?,
+    val email: String?,
+    val flags: Int?,
+    val premium_type: Int?,
+    val public_flags: Int?,
+)
+
+data class MessageObject(
+    val id: String,
+    val channel_id: String,
+    val author: UserObject,
+    val content: String,
+    val timestamp: String,
+    val edited_timestamp: String,
+    val tts: Boolean,
+    val mention_everyone: Boolean,
+    val mentions: Array<UserObject>,
+    val mention_roles: Array<String>,
+    val mention_channels: Array<String>?,
+    val attachments: Array<String>,
+    val embeds: Array<String>,
+    val reations: Array<String>?,
+    val nonce: String,
+    val pinned: String,
+    val webhook_id: String?,
+    val type: Int,
+    val activty: String?,
+    val application: String?,
+    val application_id: String?,
+    val message_reference: String?,
+    val interaction: String?,
+    val thread: String?,
+    val components: Array<String>?,
+    val sticker_items: Array<String>?,
+    val position: Int?,
+    val role_subscription_data: String?,
+)

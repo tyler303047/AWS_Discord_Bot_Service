@@ -2,6 +2,9 @@ package main.com.tyler.awsDiscordBot
 
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import main.model.request.DiscordBodyObject
 import main.model.request.Request
 import main.model.response.Response
 import org.json.JSONObject
@@ -10,6 +13,7 @@ import software.pando.crypto.nacl.Crypto
 class OrchestrationLambdaHandler: RequestHandler<Request, Response> {
 
     private val publicKeyString = System.getenv("PUBLIC_KEY")
+    private val objectMapper = ObjectMapper().registerKotlinModule()
 
     override fun handleRequest(event: Request, context: Context?): Response {
         println("Handling request: $event")
@@ -27,10 +31,12 @@ class OrchestrationLambdaHandler: RequestHandler<Request, Response> {
             return ErrorObject(401, "invalid request signature")
         }
 
-        if (event.body["type"] == "1") {
+        val bodyObject = objectMapper.readValue(event.body, DiscordBodyObject::class.java)
+
+        if (bodyObject.type == "1") {
             println("Sent OK Response")
             return Response(200, mapOf("Content-Type" to "application/json"), JSONObject(mapOf("type" to 1)).toString())
-        } else if (event.body["type"] == "2") {
+        } else if (bodyObject.type == "2" && bodyObject.data?.name == "ping") {
             return Response(200, mapOf("Content-Type" to "application/json"), JSONObject(mapOf(
                 "type" to 4,
                 "data" to JSONObject(mapOf(
