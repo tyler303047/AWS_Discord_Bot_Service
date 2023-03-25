@@ -3,8 +3,10 @@ import * as os from 'os';
 import { Construct } from "constructs";
 import { Function, InlineCode, Runtime, Code } from "aws-cdk-lib/aws-lambda";
 import * as path from 'path';
-import {aws_apigateway, aws_lambda, DockerVolume} from "aws-cdk-lib";
-import {MyStackProps} from "./utils/MyStackProps";
+import { aws_lambda, DockerVolume } from "aws-cdk-lib";
+import * as apigwv2 from '@aws-cdk/aws-apigatewayv2-alpha';
+import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha';
+import { MyStackProps } from "./utils/MyStackProps";
 
 export class MyLambdaStack extends cdk.Stack {
     constructor(scope: Construct, id: string, stageName: string, props?: MyStackProps) {
@@ -43,15 +45,11 @@ export class MyLambdaStack extends cdk.Stack {
             timeout: cdk.Duration.seconds(10),
         });
 
-        const apiEntrance = new aws_apigateway.RestApi(this, "awsDiscordBotEntrance", {
-            restApiName: "AWS_Lambda_API Entrance",
-            description: "Interactions endpoint for integration with discord to service requests for my discord bot."
+        // const apiEntrance = new aws_apigatewayv2.
+        const apiEntrance = new apigwv2.HttpApi(this, "awsDiscordBotEntrance", {
+            apiName: "AWS_Lambda_API Entrance",
+            description: "Interactions endpoint for integration with discord to service requests for my discord bot.",
+            defaultIntegration: new HttpLambdaIntegration('entranceIntegration', orchestrationHandler)
         });
-
-        const orchestrationIntegration = new aws_apigateway.LambdaIntegration(orchestrationHandler, {
-            requestTemplates: { "application/json": '{ "statusCode": "200" }'}
-        });
-
-        apiEntrance.root.addMethod("GET", orchestrationIntegration);
     }
 }
