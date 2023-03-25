@@ -2,8 +2,7 @@ package main.com.tyler.awsDiscordBot
 
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import main.model.request.DiscordBodyObject
 import main.model.request.Request
 import main.model.response.Response
@@ -13,7 +12,7 @@ import software.pando.crypto.nacl.Crypto
 class OrchestrationLambdaHandler: RequestHandler<Request, Response> {
 
     private val publicKeyString = System.getenv("PUBLIC_KEY")
-    private val objectMapper = ObjectMapper().registerKotlinModule()
+    private val objectMapper = jacksonObjectMapper()
 
     override fun handleRequest(event: Request, context: Context?): Response {
         println("Handling request: $event")

@@ -1,7 +1,5 @@
 package main.model.request
 
-import java.sql.Timestamp
-
 data class Request(
     var version: Double = 1.0,
     var resource: String = "",
