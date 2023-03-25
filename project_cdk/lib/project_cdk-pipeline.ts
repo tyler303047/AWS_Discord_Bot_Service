@@ -14,7 +14,7 @@ export class ProjectCdkPipeline extends cdk.Stack {
               connectionArn: 'arn:aws:codestar-connections:us-east-1:801301537131:connection/55337186-87da-460c-8251-d2f386c4b6c3',
           }),
           installCommands: [
-              'npm install -g aws-cdk'
+              'npm install -g aws-cdk@2.70.0'
           ],
           commands: [
             'cd project_cdk',
