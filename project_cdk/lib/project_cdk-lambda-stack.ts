@@ -46,7 +46,7 @@ export class MyLambdaStack extends cdk.Stack {
         });
 
         // const apiEntrance = new aws_apigatewayv2.
-        const apiEntrance = new apigwv2.HttpApi(this, "awsDiscordBotEntrance", {
+        const apiEntrance = new apigwv2.HttpApi(this, "awsDiscordBotEndpoint", {
             apiName: "AWS_Lambda_API Entrance",
             description: "Interactions endpoint for integration with discord to service requests for my discord bot.",
             defaultIntegration: new HttpLambdaIntegration('entranceIntegration', orchestrationHandler)
