@@ -1,5 +1,7 @@
 package main.model.request
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+
 data class Request(
     var version: Double = 1.0,
     var resource: String = "",
@@ -54,6 +56,7 @@ enum class HttpMethod {
     POST,
 }
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class DiscordBodyObject(
     val id: String,
     val application_id: String,
@@ -66,13 +69,11 @@ data class DiscordBodyObject(
     val token: String,
     val version: Int,
     val message: MessageObject?,
-    val app_permissions: String?,
     val locale: String?,
     val guild_locale: String?,
-    val entitlement_sku_ids: Array<String>?,
-    val entitlements: Array<String>?,
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class DiscordDataObject(
     val id: String,
     val name: String,
@@ -83,43 +84,32 @@ data class DiscordDataObject(
     val target_id: String?,
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class GuildMemberObject(
     val user: UserObject?,
-    val nick: String?,
-    val avatar: String?,
-    val roles: Array<String>?,
     val joined_at: String?,
-    val premium_since: String?,
     val deaf: Boolean?,
     val mute: Boolean?,
     val flags: Int?,
     val pending: Boolean?,
-    val is_pending: Boolean?,
     val permissions: String?,
-    val communication_disabled_until: String?,
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class UserObject(
     val id: String,
     val username: String,
-    val display_name: String?,
-    val global_name: String?,
     val discriminator: String?,
     val avatar: String?,
-    val avatar_decoration: String?,
     val bot: Boolean?,
     val system: Boolean?,
-    val mfa_enabled: Boolean?,
     val banner: String?,
-    val accent_color: Int?,
     val locale: String?,
-    val verified: Boolean?,
     val email: String?,
     val flags: Int?,
-    val premium_type: Int?,
-    val public_flags: Int?,
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class MessageObject(
     val id: String,
     val channel_id: String,
@@ -127,26 +117,8 @@ data class MessageObject(
     val content: String,
     val timestamp: String,
     val edited_timestamp: String,
-    val tts: Boolean,
-    val mention_everyone: Boolean,
-    val mentions: Array<UserObject>,
-    val mention_roles: Array<String>,
-    val mention_channels: Array<String>?,
-    val attachments: Array<String>,
-    val embeds: Array<String>,
-    val reations: Array<String>?,
-    val nonce: String,
-    val pinned: String,
     val webhook_id: String?,
     val type: Int,
-    val activty: String?,
     val application: String?,
     val application_id: String?,
-    val message_reference: String?,
-    val interaction: String?,
-    val thread: String?,
-    val components: Array<String>?,
-    val sticker_items: Array<String>?,
-    val position: Int?,
-    val role_subscription_data: String?,
 )
