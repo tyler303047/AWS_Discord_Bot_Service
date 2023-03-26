@@ -100,6 +100,7 @@ data class UserObject(
     val id: String,
     val username: String,
     val display_name: String?,
+    val global_name: String?,
     val discriminator: String?,
     val avatar: String?,
     val avatar_decoration: String?,
