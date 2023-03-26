@@ -43,6 +43,7 @@ export class MyLambdaStack extends cdk.Stack {
                 "PUBLIC_KEY": props!.environmentVariables!.public_key
             },
             timeout: cdk.Duration.seconds(10),
+            memorySize: 512,
         });
 
         // const apiEntrance = new aws_apigatewayv2.
