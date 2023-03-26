@@ -38,11 +38,12 @@ class OrchestrationLambdaHandler: RequestHandler<Request, Response> {
             println("Sent OK Response")
             return Response(200, mapOf("Content-Type" to "application/json"), JSONObject(mapOf("type" to 1)).toString())
         } else if (bodyObject.type == "2" && bodyObject.data?.name == "ping") {
+            println("Sent Ping Response")
             return Response(200, mapOf("Content-Type" to "application/json"), JSONObject(mapOf(
                 "type" to 4,
-                "data" to JSONObject(mapOf(
+                "data" to mapOf(
                     "content" to "PONG!",
-                )).toString()
+                )
             )).toString())
         } else {
             println("unsupported interaction found")
