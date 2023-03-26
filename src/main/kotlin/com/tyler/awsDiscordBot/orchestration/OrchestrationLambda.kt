@@ -12,6 +12,7 @@ import software.pando.crypto.nacl.Crypto
 class OrchestrationLambdaHandler: RequestHandler<Request, Response> {
 
     private val publicKeyString = System.getenv("PUBLIC_KEY")
+    private val snsArn = System.getenv("SNS_ARN")
     private val objectMapper = jacksonObjectMapper()
 
     override fun handleRequest(event: Request, context: Context?): Response {
@@ -56,6 +57,7 @@ class OrchestrationLambdaHandler: RequestHandler<Request, Response> {
 
     private fun pingResponse(): Response {
         println("Sent Ping Response")
+
         return Response(200,
             mapOf("Content-Type" to "application/json"),
             JSONObject(mapOf(

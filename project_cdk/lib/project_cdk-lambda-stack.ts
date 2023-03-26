@@ -7,6 +7,8 @@ import { aws_lambda, DockerVolume } from "aws-cdk-lib";
 import * as apigwv2 from '@aws-cdk/aws-apigatewayv2-alpha';
 import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha';
 import { MyStackProps } from "./utils/MyStackProps";
+import { Topic } from "aws-cdk-lib/aws-sns";
+import {PolicyStatement} from "aws-cdk-lib/aws-iam";
 
 export class MyLambdaStack extends cdk.Stack {
     constructor(scope: Construct, id: string, stageName: string, props?: MyStackProps) {
@@ -35,18 +37,27 @@ export class MyLambdaStack extends cdk.Stack {
                 }
             });
 
+        const orchestrationTopic = new Topic(this, 'OrchestrationTopic');
+
+        const orchestrationPublishingPolicy = new PolicyStatement({
+            actions: ['sns:publish'],
+            resources: ['*'],
+        });
+
         const orchestrationHandler = new Function(this, 'OrchestrationLambda', {
             runtime: Runtime.JAVA_11,
             handler: 'com.tyler.awsDiscordBot.orchestration.OrchestrationLambdaHandler::handleRequest',
             code: projectCode,
             environment: {
-                "PUBLIC_KEY": props!.environmentVariables!.public_key
+                "PUBLIC_KEY": props!.environmentVariables!.public_key,
+                "SNS_ARN": orchestrationTopic.topicArn
             },
             timeout: cdk.Duration.seconds(10),
             memorySize: 512,
         });
 
-        // const apiEntrance = new aws_apigatewayv2.
+        orchestrationHandler.addToRolePolicy(orchestrationPublishingPolicy);
+
         const apiEntrance = new apigwv2.HttpApi(this, "awsDiscordBotEndpoint", {
             apiName: "AWS_Lambda_API Entrance",
             description: "Interactions endpoint for integration with discord to service requests for my discord bot.",
