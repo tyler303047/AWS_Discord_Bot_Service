@@ -26,6 +26,7 @@ class MainTest extends Specification {
         where:
         filePath                                        | statusCode
         "./src/test/resources/DiscordDefaultRequest.json"   | 200
+        "./src/test/resources/DiscordPingCommandRequest.json"   | 200
         "./src/test/resources/SecondDiscordRequest.json"    | 401
     }
 }

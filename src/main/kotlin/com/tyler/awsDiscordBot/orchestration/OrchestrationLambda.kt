@@ -17,7 +17,9 @@ class OrchestrationLambdaHandler: RequestHandler<Request, Response> {
     override fun handleRequest(event: Request, context: Context?): Response {
         println("Handling request: $event")
 
-        println("publicKeyString: ${publicKeyString}")
+        println("publicKeyString: $publicKeyString")
+
+        println("${event.body}")
 
         val isVerified = Crypto.signVerify(
             Crypto.signingPublicKey(publicKeyString.decodeHex()),
