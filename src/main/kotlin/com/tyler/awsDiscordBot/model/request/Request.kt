@@ -69,6 +69,8 @@ data class DiscordBodyObject(
     val app_permissions: String?,
     val locale: String?,
     val guild_locale: String?,
+    val entitlement_sku_ids: Array<String>?,
+    val entitlements: Array<String>?,
 )
 
 data class DiscordDataObject(
@@ -92,6 +94,7 @@ data class GuildMemberObject(
     val mute: Boolean?,
     val flags: Int?,
     val pending: Boolean?,
+    val is_pending: Boolean?,
     val permissions: String?,
     val communication_disabled_until: String?,
 )
