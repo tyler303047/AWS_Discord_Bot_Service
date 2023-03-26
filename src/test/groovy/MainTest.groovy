@@ -2,7 +2,7 @@ import com.amazonaws.services.lambda.runtime.Context
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import main.com.tyler.awsDiscordBot.OrchestrationLambdaHandler
+import com.tyler.awsDiscordBot.orchestration.OrchestrationLambdaHandler
 import main.model.request.Request
 import spock.lang.Specification
 
@@ -24,9 +24,9 @@ class MainTest extends Specification {
         output.statusCode == statusCode
 
         where:
-        filePath                                        | statusCode
-        "./src/test/resources/DiscordDefaultRequest.json"   | 200
+        filePath                                                | statusCode
+        "./src/test/resources/DiscordDefaultRequest.json"       | 200
         "./src/test/resources/DiscordPingCommandRequest.json"   | 200
-        "./src/test/resources/SecondDiscordRequest.json"    | 401
+        "./src/test/resources/SecondDiscordRequest.json"        | 401
     }
 }

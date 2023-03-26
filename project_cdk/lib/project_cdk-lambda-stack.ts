@@ -37,7 +37,7 @@ export class MyLambdaStack extends cdk.Stack {
 
         const orchestrationHandler = new Function(this, 'OrchestrationLambda', {
             runtime: Runtime.JAVA_11,
-            handler: 'main.com.tyler.awsDiscordBot.OrchestrationLambdaHandler::handleRequest',
+            handler: 'com.tyler.awsDiscordBot.orchestration.OrchestrationLambdaHandler::handleRequest',
             code: projectCode,
             environment: {
                 "PUBLIC_KEY": props!.environmentVariables!.public_key
