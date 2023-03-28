@@ -13,9 +13,11 @@ import software.amazon.awssdk.services.sns.model.PublishRequest
 import software.pando.crypto.nacl.Crypto
 
 class OrchestrationLambdaHandler(
-    publicKeyStringConstructor: String?,
-    snsArnConstructor: String?,
-    snsClientConstructor: SnsClient?
+    publicKeyStringConstructor: String? = System.getenv("PUBLIC_KEY"),
+    snsArnConstructor: String? = System.getenv("SNS_ARN"),
+    snsClientConstructor: SnsClient? = SnsClient.builder()
+        .region(Region.of(System.getenv("AWS_REGION")))
+        .build()
 ): RequestHandler<Request, SerializedResponse> {
 
     private val objectMapper = jacksonObjectMapper()

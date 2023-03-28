@@ -21,6 +21,7 @@ class MainTest extends Specification {
         def contents = file.readBytes()
         def event = objectMapper.readValue(contents, new TypeReference<Request>() {})
         def context = Mock(Context)
+        def zeroArgHandler = new OrchestrationLambdaHandler()
         def output = new OrchestrationLambdaHandler(
                 null,
                 null,
