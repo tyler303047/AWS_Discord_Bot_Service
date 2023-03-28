@@ -59,6 +59,7 @@
           <environmentVariables>
             <PUBLIC_KEY>96376e878b51e7436d1a918900d30b67db05d4157828550fcb65a1cbfd40ecee</PUBLIC_KEY>
             <SNS_ARN />
+            <AWS_REGION>us-east-1</AWS_REGION>
           </environmentVariables>
         </configuration>
       </plugin>
@@ -104,23 +105,9 @@
       </exclusions>
     </dependency>
   </dependencies>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>com.amazonaws</groupId>
-        <artifactId>aws-java-sdk-bom</artifactId>
-        <version>1.12.435</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.amazonaws</groupId>
-        <artifactId>aws-java-sdk-sns</artifactId>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
   <properties>
     <maven.compiler.target>11</maven.compiler.target>
+    <aws.java.sdk.version>2.20.32</aws.java.sdk.version>
     <kotlin.version>1.8.0</kotlin.version>
     <maven.compiler.source>11</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

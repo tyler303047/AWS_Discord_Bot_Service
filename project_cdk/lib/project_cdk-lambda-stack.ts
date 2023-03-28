@@ -3,7 +3,7 @@ import * as os from 'os';
 import { Construct } from "constructs";
 import { Function, InlineCode, Runtime, Code } from "aws-cdk-lib/aws-lambda";
 import * as path from 'path';
-import { aws_lambda, DockerVolume } from "aws-cdk-lib";
+import {aws_lambda, aws_lambda_event_sources, aws_sns, DockerVolume} from "aws-cdk-lib";
 import * as apigwv2 from '@aws-cdk/aws-apigatewayv2-alpha';
 import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha';
 import { MyStackProps } from "./utils/MyStackProps";
@@ -63,5 +63,19 @@ export class MyLambdaStack extends cdk.Stack {
             description: "Interactions endpoint for integration with discord to service requests for my discord bot.",
             defaultIntegration: new HttpLambdaIntegration('entranceIntegration', orchestrationHandler)
         });
+
+        const addHandler = new Function(this, 'AddHandler', {
+            runtime: Runtime.JAVA_11,
+            handler: 'com.tyler.awsDiscordBot.addCommand.addCommandLambdaHandler::handleRequest',
+            code: projectCode,
+            timeout: cdk.Duration.seconds(10),
+            memorySize: 512,
+        });
+
+        addHandler.addEventSource(new aws_lambda_event_sources.SnsEventSource(orchestrationTopic, {
+            filterPolicy: {
+                command_type: aws_sns.SubscriptionFilter.stringFilter({allowlist: ['add-command']})
+            }
+        }));
     }
 }

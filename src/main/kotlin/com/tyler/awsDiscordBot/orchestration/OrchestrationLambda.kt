@@ -5,17 +5,27 @@ import com.amazonaws.services.lambda.runtime.RequestHandler
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import main.model.request.DiscordBodyObject
 import main.model.request.Request
-import main.model.response.Response
-import org.json.JSONObject
+import main.model.response.*
+import software.amazon.awssdk.regions.Region
+import software.amazon.awssdk.services.sns.SnsClient
+import software.amazon.awssdk.services.sns.model.MessageAttributeValue
+import software.amazon.awssdk.services.sns.model.PublishRequest
 import software.pando.crypto.nacl.Crypto
 
-class OrchestrationLambdaHandler: RequestHandler<Request, Response> {
+class OrchestrationLambdaHandler(
+    publicKeyStringConstructor: String?,
+    snsArnConstructor: String?,
+    snsClientConstructor: SnsClient?
+): RequestHandler<Request, SerializedResponse> {
 
-    private val publicKeyString = System.getenv("PUBLIC_KEY")
-    private val snsArn = System.getenv("SNS_ARN")
     private val objectMapper = jacksonObjectMapper()
+    private val publicKeyString = publicKeyStringConstructor ?: System.getenv("PUBLIC_KEY")
+    private val snsArn = snsArnConstructor ?: System.getenv("SNS_ARN")
+    private val snsClient = snsClientConstructor ?: SnsClient.builder()
+        .region(Region.of(System.getenv("AWS_REGION")))
+        .build()
 
-    override fun handleRequest(event: Request, context: Context?): Response {
+    override fun handleRequest(event: Request, context: Context?): SerializedResponse {
         println("Handling request: $event")
 
         println("publicKeyString: $publicKeyString")
@@ -38,7 +48,7 @@ class OrchestrationLambdaHandler: RequestHandler<Request, Response> {
         return fanOutByType(bodyObject)
     }
 
-    private fun fanOutByType(bodyObject: DiscordBodyObject): Response {
+    private fun fanOutByType(bodyObject: DiscordBodyObject): SerializedResponse {
         return when(bodyObject.type) {
             "1" -> verifyResponse()
             "2" -> pingResponse()
@@ -48,28 +58,52 @@ class OrchestrationLambdaHandler: RequestHandler<Request, Response> {
         }
     }
 
-    private fun verifyResponse(): Response {
+    private fun verifyResponse(): SerializedResponse {
         println("Sent OK Response")
-        return Response(200,
-            mapOf("Content-Type" to "application/json"),
-            JSONObject(mapOf("type" to 1)).toString())
+        return VerifyResponse().toSerialized(objectMapper)
     }
 
-    private fun pingResponse(): Response {
+    private fun pingResponse(): SerializedResponse {
         println("Sent Ping Response")
 
-        return Response(200,
-            mapOf("Content-Type" to "application/json"),
-            JSONObject(mapOf(
-                "type" to 4,
-                "data" to mapOf(
-                    "content" to "PONG!",
-                )
-            )).toString())
+        val publishRequest = PublishRequest.builder()
+            .message("haha lul")
+            .topicArn(snsArn)
+            .build()
+
+        val response = snsClient.publish(publishRequest)
+
+        return PongResponse().toSerialized(objectMapper)
     }
 
-    private fun errorObject(statusCode: Int, errorMessage: String): Response {
-        return Response(statusCode, null, JSONObject(mapOf("error" to errorMessage)).toString())
+    private fun fanOutBySlashCommand(bodyObject: DiscordBodyObject): SerializedResponse {
+        return when(bodyObject.data!!.name) {
+            "ping" -> pingResponse()
+            "ls-add" -> addSimCommand(bodyObject)
+            else -> errorObject(400, "unsupported slash command type").also {
+                println("unsupported slash command found")
+            }
+        }
+    }
+
+    private fun addSimCommand(bodyObject: DiscordBodyObject): SerializedResponse {
+        val publishRequest = PublishRequest.builder()
+            .messageAttributes(
+                mapOf(
+                    "command_type" to MessageAttributeValue.builder()
+                        .stringValue("add-command")
+                        .build()
+                )
+            )
+            .message(objectMapper.writeValueAsString(bodyObject))
+            .topicArn(snsArn)
+            .build()
+
+        return DeferringResponse().toSerialized(objectMapper)
+    }
+
+    private fun errorObject(statusCode: Int, errorMessage: String): SerializedResponse {
+        return ErrorResponse(statusCode, null, ErrorBody(errorMessage)).toSerialized(objectMapper)
     }
 
     private fun String.decodeHex(): ByteArray {
