@@ -53,7 +53,7 @@ class OrchestrationLambdaHandler(
     private fun fanOutByType(bodyObject: DiscordBodyObject): SerializedResponse {
         return when(bodyObject.type) {
             "1" -> verifyResponse()
-            "2" -> pingResponse()
+            "2" -> fanOutBySlashCommand(bodyObject)
             else -> errorObject(400, "unsupported interaction type").also {
                 println("unsupported interaction found")
             }
