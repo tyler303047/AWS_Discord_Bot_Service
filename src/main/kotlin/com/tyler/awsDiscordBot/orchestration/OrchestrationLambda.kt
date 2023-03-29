@@ -88,6 +88,7 @@ class OrchestrationLambdaHandler(
             .messageAttributes(
                 mapOf(
                     "command_type" to MessageAttributeValue.builder()
+                        .dataType("String")
                         .stringValue("add-command")
                         .build()
                 )
