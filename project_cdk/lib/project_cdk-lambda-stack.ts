@@ -66,7 +66,7 @@ export class MyLambdaStack extends cdk.Stack {
 
         const addHandler = new Function(this, 'AddHandler', {
             runtime: Runtime.JAVA_11,
-            handler: 'com.tyler.awsDiscordBot.addCommand.addCommandLambdaHandler::handleRequest',
+            handler: 'com.tyler.awsDiscordBot.addCommand.AddCommandLambdaHandler::handleRequest',
             code: projectCode,
             timeout: cdk.Duration.seconds(10),
             memorySize: 512,

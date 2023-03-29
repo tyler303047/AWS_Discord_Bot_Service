@@ -8,7 +8,7 @@ import software.amazon.awssdk.services.sns.SnsClient
 import software.amazon.awssdk.services.sns.model.PublishRequest
 import spock.lang.Specification
 
-class MainTest extends Specification {
+class OrchestrationHandlerTest extends Specification {
 
     def objectMapper = new ObjectMapper().registerModule(new KotlinModule())
 
