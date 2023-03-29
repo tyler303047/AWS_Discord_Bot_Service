@@ -47,7 +47,9 @@ class OrchestrationLambdaHandler(
 
         val bodyObject = objectMapper.readValue(event.body, DiscordBodyObject::class.java)
 
-        return fanOutByType(bodyObject)
+        return fanOutByType(bodyObject).also {
+            println("Serialized Response: $it")
+        }
     }
 
     private fun fanOutByType(bodyObject: DiscordBodyObject): SerializedResponse {
@@ -67,13 +69,6 @@ class OrchestrationLambdaHandler(
 
     private fun pingResponse(): SerializedResponse {
         println("Sent Ping Response")
-
-        val publishRequest = PublishRequest.builder()
-            .message("haha lul")
-            .topicArn(snsArn)
-            .build()
-
-        val response = snsClient.publish(publishRequest)
 
         return PongResponse().toSerialized(objectMapper)
     }
@@ -100,6 +95,10 @@ class OrchestrationLambdaHandler(
             .message(objectMapper.writeValueAsString(bodyObject))
             .topicArn(snsArn)
             .build()
+
+        snsClient.publish(publishRequest).also {
+            println("Publishing to SNS Topic: $it")
+        }
 
         return DeferringResponse().toSerialized(objectMapper)
     }
