@@ -111,4 +111,8 @@ fun DeferringResponse.toSerialized(objectMapper: ObjectMapper): SerializedRespon
 }
 data class DeferringBody(
     val type: Int = 5,
+    val data: DiscordDeferredData = DiscordDeferredData(),
+)
+data class DiscordDeferredData(
+    val content: String = "Loading...Please wait",
 )
