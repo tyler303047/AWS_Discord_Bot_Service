@@ -18,7 +18,7 @@ class AddCommandLambdaHandler: RequestHandler<SNSEvent, SerializedResponse> {
     override fun handleRequest(event: SNSEvent, context: Context?): SerializedResponse {
         val data = objectMapper.readValue(event.records.first().sns.message, DiscordBodyObject::class.java)
 
-        val response = HttpClient.newBuilder().build().send(
+        HttpClient.newBuilder().build().send(
             HttpRequest.newBuilder()
                 .uri(URI.create(
                     "https://discord.com/api/v10/webhooks/${data.application_id}/${data.token}/messages/@original"
@@ -29,7 +29,9 @@ class AddCommandLambdaHandler: RequestHandler<SNSEvent, SerializedResponse> {
                 .header("Content-Type", "application/json")
                 .build(),
             BodyHandlers.ofString()
-        )
+        ).also {
+            println("Response back to Discord: ${it.body()}")
+        }
 
         return VerifyResponse().toSerialized(objectMapper)
     }
