@@ -40,12 +40,16 @@ class OrchestrationLambdaHandler(
             event.headers["x-signature-ed25519"]?.decodeHex()
         )
 
+        println("isVerified: $isVerified")
+
         if (!isVerified) {
             println("Sent Invalid Request Response")
             return errorObject(401, "invalid request signature")
         }
 
+        println("Before deserialization")
         val bodyObject = objectMapper.readValue(event.body, DiscordBodyObject::class.java)
+        println("After deserialization")
 
         return fanOutByType(bodyObject).also {
             println("Serialized Response: $it")
