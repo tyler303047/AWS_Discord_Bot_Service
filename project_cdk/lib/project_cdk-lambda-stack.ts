@@ -77,5 +77,22 @@ export class MyLambdaStack extends cdk.Stack {
                 command_type: aws_sns.SubscriptionFilter.stringFilter({allowlist: ['add-command']})
             }
         }));
+
+        /*
+            Add snapstart support
+         */
+        (orchestrationHandler.node.defaultChild as aws_lambda.CfnFunction).addPropertyOverride('SnapStart', {
+            ApplyOn: 'PublishedVersions',
+        });
+        (addHandler.node.defaultChild as aws_lambda.CfnFunction).addPropertyOverride('SnapStart', {
+            ApplyOn: 'PublishedVersions',
+        });
+
+        new aws_lambda.Version(this, 'MyVersionOrchestration', {
+            lambda: orchestrationHandler,
+        });
+        new aws_lambda.Version(this, 'MyVersionAdd', {
+            lambda: addHandler,
+        });
     }
 }
