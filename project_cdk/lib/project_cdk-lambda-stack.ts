@@ -61,7 +61,7 @@ export class MyLambdaStack extends cdk.Stack {
         const apiEntrance = new apigwv2.HttpApi(this, "awsDiscordBotEndpoint", {
             apiName: "AWS_Lambda_API Entrance",
             description: "Interactions endpoint for integration with discord to service requests for my discord bot.",
-            defaultIntegration: new HttpLambdaIntegration('entranceIntegration', orchestrationHandler)
+            defaultIntegration: new HttpLambdaIntegration('entranceIntegration', orchestrationHandler.currentVersion)
         });
 
         const addHandler = new Function(this, 'AddHandler', {
@@ -72,7 +72,7 @@ export class MyLambdaStack extends cdk.Stack {
             memorySize: 512,
         });
 
-        addHandler.addEventSource(new aws_lambda_event_sources.SnsEventSource(orchestrationTopic, {
+        addHandler.currentVersion.addEventSource(new aws_lambda_event_sources.SnsEventSource(orchestrationTopic, {
             filterPolicy: {
                 command_type: aws_sns.SubscriptionFilter.stringFilter({allowlist: ['add-command']})
             }
