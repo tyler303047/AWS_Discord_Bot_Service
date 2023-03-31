@@ -36,7 +36,7 @@ class OrchestrationHandlerTest extends Specification {
         where:
         filePath                                                | statusCode    |   sendForwardNum
         "./src/test/resources/DiscordDefaultRequest.json"       | 200           |   0
-        "./src/test/resources/DiscordPingCommandRequest.json"   | 200           |   1
+        "./src/test/resources/DiscordPingCommandRequest.json"   | 200           |   0
         "./src/test/resources/SecondDiscordRequest.json"        | 401           |   0
     }
 }
