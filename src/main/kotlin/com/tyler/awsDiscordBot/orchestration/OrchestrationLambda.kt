@@ -49,7 +49,7 @@ class OrchestrationLambdaHandler(
 
         println("Before deserialization")
         val bodyObject = objectMapper.readValue(event.body, DiscordBodyObject::class.java)
-        println("After deserialization7")
+        println("After deserialization")
 
         return fanOutByType(bodyObject).also {
             println("Serialized Response: $it")

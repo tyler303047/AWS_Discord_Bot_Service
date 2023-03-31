@@ -50,7 +50,8 @@ export class MyLambdaStack extends cdk.Stack {
             code: projectCode,
             environment: {
                 "PUBLIC_KEY": props!.environmentVariables!.public_key,
-                "SNS_ARN": orchestrationTopic.topicArn
+                "SNS_ARN": orchestrationTopic.topicArn,
+                "JAVA_TOOL_OPTIONS": "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
             },
             timeout: cdk.Duration.seconds(10),
             memorySize: 512,
